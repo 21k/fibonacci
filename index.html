@@ -1,0 +1,125 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>斐波拉契曲线绘制-tmxk.org</title>
+    <style>
+        canvas{position: absolute;top:50%;left:50%; margin-left: -450px;margin-top: -450px}
+        div{position: absolute; top:200px;font-family: "微软雅黑"; width: 300px}
+        .set{;left:20px;}
+        .code{;right:20px; background: #333; color:antiquewhite;padding: 10px;}
+        h3{text-align: right;}
+        h1,h3{ line-height: 30px}
+        li{ padding: 5px; list-style: none}
+        button{ padding: 5px}
+        *{ margin: 0; padding: 0}
+    </style>
+</head>
+<body>
+<canvas id="myfblq" width="900" height="900"></canvas>
+<div class="set">
+    <h1>斐波拉契曲线绘制</h1>
+    <h3>----fblq(c,f,oo,i,["red",1,1])</h3>
+    <ul>
+        <li><button onclick="ms(0)">角度:i</button></li>
+        <li><button onclick="ms(1)">角度:i%Math.PI</button></li>
+        <li><button onclick="ms(2)">角度:i/50</button></li>
+        <li><button onclick="ms(3)">角度:i*50</button></li>
+        <li><button onclick="ms(4)">角度:Math.sin(i)</button></li>
+        <li><button onclick="ms(5)">角度:Math.log(i)</button></li>
+        <li><button onclick="ms(6)">黑色,角度:i%Math.PI</button></li>
+    </ul>
+</div>
+<div class="code">
+    <pre>
+/**
+    斐波拉契函数(
+        canvas对象
+        ,斐波拉契序列
+        ,圆心
+        ,偏移角度
+        ,曲线[颜色,粗细,循环时间]
+    )
+**/
+function  fblq(c,s,p,d,e){
+var i= 0
+    ,e=e||["blue",1,100]
+    ,o=[];
+    o.push(p[0],p[1])
+    c.lineWidth=e[1]
+    var x=setInterval(function() {
+        c.strokeStyle = e[0]
+        c.beginPath()
+        if (i > 1) {
+            o[0] += l[i % 4][0] * s[i - 2]
+            o[1] += l[i % 4][1] * s[i - 2]
+        }
+        c.arc(
+            bd(o,oo,d)[0]
+            ,bd(o,oo,d)[1]
+            ,s[i]
+            ,i % 4 * Math.PI / 2+d
+            ,(i % 4 + 1) * Math.PI / 2+d
+            ,false
+        )
+        c.stroke()
+        c.closePath()
+        if (++i > 15) {
+            clearInterval(x)
+            isover=true
+        }
+    },e[2])
+}
+    </pre>
+</div>
+    <script>
+        var f=[0,1],l=[[-1,0],[0,-1],[1,0],[0,1]],oo=[450,450],isover=false,i=-1
+        while(f.length<16) f.push(f[f.length-2]+f[f.length-1])
+        var c=document.getElementById("myfblq").getContext("2d");
+        function  fblq(c,s,p,d,e){
+            var i= 0,e=e||["blue",1,100],o=[];
+            o.push(p[0],p[1])
+            c.lineWidth=e[1]
+
+            var x1=setInterval(function() {
+                if (++i > 15) {
+                    clearInterval(x1)
+                    isover=true
+                }
+                c.strokeStyle = e[0]
+                c.beginPath()
+                if (i > 1) {
+                    o[0] += l[i % 4][0] * s[i - 2]
+                    o[1] += l[i % 4][1] * s[i - 2]
+                }
+                c.arc(bd(o,oo,d)[0],bd(o,oo,d)[1], s[i], i % 4 * Math.PI / 2+d, (i % 4 + 1) * Math.PI / 2+d, false)
+                c.stroke()
+                c.closePath()
+            },e[2])
+        }
+        function bd(d1,d2,d) {return [d2[0] + (d1[0] - d2[0]) * Math.cos(d) + (d2[1] - d1[1]) * Math.sin(d), d2[1] +(d1[0] - d2[0]) * Math.sin(d) - (d2[1] - d1[1]) * Math.cos(d)]}
+        function rgb(){ return "rgb("+Math.round(Math.random()*255)+","+Math.round(Math.random()*255)+","+Math.round(Math.random()*255)+")"}
+        fblq(c,f,oo,0,["red",1,1])
+        var x2=setInterval(function(){if(isover) {i++,fblq(c,f,oo,i,[rgb(),1,1]),isover=false}},1)
+        function ms(n){
+            var tmp=[];
+            clearInterval(x2),c.clearRect(0,0,900,900),i=-1;
+            x2=setInterval(function(){if(isover) {i++,tmp=st(n,i),fblq(c,f,oo,tmp[0],[tmp[1],1,1]),isover=false}},1)
+        }
+        function st(n,m)
+        {
+        switch(n) {
+            case 0:return [m,rgb()];break;
+            case 1:return [m%Math.PI,rgb()];break;
+            case 2:return [m/50,rgb()];break;
+            case 3:return [m*50,rgb()];break;
+            case 4:return [Math.sin(m),rgb()];break;
+            case 5:return[ Math.log(m),rgb()];break;
+            case 6:return[m%Math.PI,"black"];break;
+            }
+        }
+    </script>
+</body>
+</html>
