@@ -2,7 +2,13 @@ fibonacci demo  by canvas
 ==================
 ###usage
 
-```html
+```js
+var canvasObj=document.getElementById("myfblq").getContext("2d");
+var list=[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610];
+var center=[400,500];
+var angle=Math.PI/2;
+var curveset=["#f00",1,100];
+
 fblq("canvasObj","list","center","angle","curveset");
 
 /*
