@@ -2,7 +2,7 @@ fibonacci demo  by canvas
 ==================
 ###usage
 
-```javascrript
+```html
 fblq(canvasObj,list,center,angle,curveset)
 
 canvasObj //canvas obj, e.g. ,document.getElementById("myfblq").getContext("2d");
